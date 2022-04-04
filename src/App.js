@@ -18,7 +18,9 @@ useEffect(() => {
         }, 1500)
     }
   }
+
 }, [messageList])
+
 
 const handleChange = (event) => {
   setValue(event.target.value)
@@ -39,7 +41,10 @@ const handler = () => {
         <br/>
         {messageList.map((element, index) => (<Message text={element} key={index} />))}
         <div>
-          <input type="text" placeholder="Введите сообщение" onChange={handleChange}/> 
+          <input
+          type="text"
+          placeholder="Введите сообщение"
+          onChange={handleChange}/>
           <button onClick={handler}>Отправить</button>
         </div>
       </header>
