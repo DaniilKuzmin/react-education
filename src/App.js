@@ -1,9 +1,10 @@
 import './App.css';
 import React, {useState, useEffect} from "react";
-import Message from './Message.js'
 import AUTHOR from './constants/common.js'
+import Messages from './components/Messages'
+import ChatList from './components/ChatList'
 
-function App(props) {
+function App() {
 
 const [messageList, setMessageList] = useState([]);
 const [value, setValue] = useState('');
@@ -30,16 +31,17 @@ const handler = () => {
 
   let messageObj = {text: value, author: AUTHOR.me}
 
-  setMessageList([...messageList, messageObj])
-
+  setMessageList([...messageList, messageObj]);
+  setValue('');
 }
 
   return (
     <div className="App">
       <header className="App-header">
-        <h4>Список сообщений:</h4>
-        <br/>
-        {messageList.map((element, index) => (<Message text={element} key={index} />))}
+        <h4>Chat List</h4>
+        <ChatList />
+        <h4>Message List</h4>
+        <Messages messages={messageList} />
         <div>
           <input
           type="text"
