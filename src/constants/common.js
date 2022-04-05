@@ -1,6 +1,7 @@
 export const AUTHOR = {
 	me: 'Me',
-	bot: 'bot'
+	bot: 'bot',
+	angryBot: 'angryBot'
 }
 
 export default AUTHOR;
