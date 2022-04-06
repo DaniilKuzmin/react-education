@@ -10,6 +10,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import AndroidIcon from '@mui/icons-material/Android';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { green } from '@mui/material/colors';
+import Router from './pages/Router'
 
 function App() {
 
@@ -87,6 +88,7 @@ const enterHandler = (event) => {
     <ThemeProvider theme={theme}>
     <div className="App">
       <header className="App-header">
+      <Router />
       </header>
       <div className="chatWindow">
         <div className="chatList">
