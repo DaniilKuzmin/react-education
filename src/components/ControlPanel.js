@@ -28,20 +28,21 @@ const inputRef = useRef(null);
 
 
 const handleChange = (event) => {
-  setValue(event.target.value)
+  setValue(event.target.value);
 }
 
 const handler = () => {
 
   const newMessage = {text: value, author: AUTHOR.me}
+  inputRef.current.value = ''
   addMessage(chatId, newMessage);
-  setValue("");
   inputRef.current?.focus();
 }
 
 useEffect(() => {
+
 	inputRef.current?.focus();
-})
+}, [value])
 const enterHandler = (event) => {
   if (event.key === 'Enter') {
     handler()
@@ -52,8 +53,7 @@ const enterHandler = (event) => {
 			<div>
 			<div className="form">
               <TextField
-                id='input'
-                autoFocus={true}
+                inputRef={inputRef}
                 type="text"
                 placeholder="Введите сообщение"
                 onChange={handleChange}
