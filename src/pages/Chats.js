@@ -1,23 +1,24 @@
 
 import MessageList from '../components/MessageList';
 import ChatList from '../components/ChatList';
-import ControlPanel from '../components/ControlPanel';
 import { useParams } from 'react-router-dom';
 
 
 
 const Chats = ({ chats, addMessage }) => {
-	let { id } = useParams();
-	console.log(id);
+
+    let { chatId } = useParams()
+
 	return <div>
+
 	<div className="chatWindow">
         <div className="chatList">
         <h4>Chat List</h4>
         <ChatList chats={chats} />
         </div>
         <div className="columnTwo">
-        <MessageList chats={chats} />
-        <ControlPanel addMessage={addMessage} />
+        <MessageList chats={chats} addMessage={addMessage}/>
+        {chats[chatId] ? null : <div><p>Change Chat</p></div>}
         </div>
       </div>
       </div>

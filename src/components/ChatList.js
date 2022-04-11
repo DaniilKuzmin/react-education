@@ -6,37 +6,45 @@ import ListItemText from'@mui/material/ListItemText';
 import Avatar from'@mui/material/Avatar';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
-
+//import React, { useState } from "react";
 
 // import Chat from './Chat';
 //import Chats from './Chats';
 //import { useParams } from 'react-router-dom';
 
 const ChatList = ({ chats }) => {
-	//let { chatId } = useParams();
+	const chatsArray = Object.keys(chats);
+
+	const removeHandler = (event) => {
+
+		delete chats[event.target.id]
+
+		console.log(chats)
+		console.log(event.target.id)
+	}
 
 	return <div>
-		{Object.keys(chats).map((chat, index) => (
+		{chatsArray.map((chat, index) => (
 			<Link to={`/chats/${chat}`} key={index}>
-			<div className='chat' key={index}>
-				<ListItem 
-					secondaryAction={<IconButton edge="end" aria-label="delete">
-						<DeleteIcon/>
-						</IconButton>
-				}
-				>
-				<ListItemAvatar>
-					<Avatar>
-						<AdbIcon />
-					</Avatar>
-				</ListItemAvatar>
-				<ListItemText
-					primary={chats[chat].name}
-					secondary=''
-				/>
-				</ListItem>
-				</div>
-				</Link>
+						<div className='chat'>
+							<ListItem 
+								secondaryAction={<IconButton onClick={removeHandler} id={`id${index + 1}`} edge="end" aria-label="delete">
+									<DeleteIcon />
+									</IconButton>
+							}
+							>
+							<ListItemAvatar>
+								<Avatar>
+									<AdbIcon />
+								</Avatar>
+							</ListItemAvatar>
+							<ListItemText
+								primary={chats[chat].name}
+								secondary=''
+							/>
+							</ListItem>
+							</div>
+							</Link>
 			))}
 	</div>
 }

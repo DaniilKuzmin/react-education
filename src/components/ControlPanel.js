@@ -42,7 +42,7 @@ const handler = () => {
 useEffect(() => {
 
 	inputRef.current?.focus();
-}, [value])
+}, [value, chatId])
 const enterHandler = (event) => {
   if (event.key === 'Enter') {
     handler()
