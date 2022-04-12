@@ -50,6 +50,7 @@
   margin: 0 auto;
   background-color: #80bfff;
   display: flex;
+  color: darkblue;
 }
 
 .chatList {
@@ -62,7 +63,7 @@
 }
 
 .columnTwo {
-  height: 100%;
+  height: 96%;
   width: 70%;
 }
 
@@ -93,4 +94,18 @@
   background-color: greenyellow;
   outline: 1px solid black;
   margin: 3px;
+}
+
+.menu {
+  display: flex;
+}
+
+.menu li {
+ list-style: none;
+ margin: 0 20px; 
+}
+
+.menu li a {
+  color: white;
+  text-decoration: none;
 }
