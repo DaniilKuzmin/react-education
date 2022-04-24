@@ -1,24 +1,23 @@
 
 import MessageList from '../components/MessageList';
 import ChatList from '../components/ChatList';
-import { useParams } from 'react-router-dom';
+import ControlPanel from '../components/ControlPanel';
+import { useSelector } from 'react-redux';
 
+const Chats = () => {
 
-
-const Chats = ({ chats, addMessage }) => {
-
-    let { chatId } = useParams()
+    const chats = useSelector(state => state.chats.chatList)
 
 	return <div>
 
 	<div className="chatWindow">
         <div className="chatList">
         <h4>Chat List</h4>
-        <ChatList chats={chats} />
+        <ChatList />
         </div>
         <div className="columnTwo">
-        <MessageList chats={chats} addMessage={addMessage}/>
-        {chats[chatId] ? null : <div><p>Change Chat</p></div>}
+        <MessageList />
+        {chats.length > 0 ? <ControlPanel className='form' /> : (<div><p>Change Chat</p></div>)}
         </div>
       </div>
       </div>

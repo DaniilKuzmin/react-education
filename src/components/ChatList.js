@@ -6,38 +6,44 @@ import ListItemText from'@mui/material/ListItemText';
 import Avatar from'@mui/material/Avatar';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
-import { MyCounterContext } from '../App';
-//import React, { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import Button from '@mui/material/Button';
+import { Dialog, DialogTitle } from '@mui/material';
+import { useState } from 'react';
+import TextField from '@mui/material/TextField';
+import { addChat } from '../store/chats/actions'
 
-// import Chat from './Chat';
-//import Chats from './Chats';
-//import { useParams } from 'react-router-dom';
+const ChatList = () => {
+	const chats = useSelector(state => state.chats.chatList)
+	const [visible, setVisible] = useState(false);
+	const [chatName, setChatName] = useState('');
+	const dispatch = useDispatch();
 
-const ChatList = ({ chats }) => {
+	const chatNameHandler = (e) => {
+		setChatName(e.target.value)
+	}
 
-	const contextValue = useContext(MyCounterContext);
 
-	const chatsArray = Object.keys(chats);
+	const closeHandler = () => {
+		setVisible(false);
+	}
 
-	const removeHandler = (event) => {
+	const addChatHandler = () => {
+		setVisible(true);
+	}
 
-		delete chats[event.target.id]
-
-		console.log(chats)
-		console.log(event.target.id)
+	const saveHandler = () => {
+		dispatch(addChat(chatName));
+		setChatName('')
+		closeHandler();
 	}
 
 	return <div>
-		My Counter is <h1>{contextValue.counter}</h1>
-		<button
-			onClick={() =>
-				contextValue.setCounter(contextValue.counter + 1)}>Change counter</button>
-			{chatsArray.map((chat, index) => (
-				<Link to={`/chats/${chat}`} key={index}>
+			{chats?.length > 0 ? (chats.map((chat) => (
+				<Link to={`/chats/${chat.id}`} key={chat.id}>
 							<div className='chat'>
 								<ListItem 
-									secondaryAction={<IconButton onClick={removeHandler} id={`id${index + 1}`} edge="end" aria-label="delete">
+									secondaryAction={<IconButton edge="end" aria-label="delete">
 										<DeleteIcon />
 										</IconButton>
 								}
@@ -48,13 +54,25 @@ const ChatList = ({ chats }) => {
 									</Avatar>
 								</ListItemAvatar>
 								<ListItemText
-									primary={chats[chat].name}
+									primary={chat.name}
 									secondary=''
 								/>
 								</ListItem>
 								</div>
 								</Link>
-				))}
+				))
+			) : (
+				<div>Chats not found.</div>)}
+				<Button onClick={addChatHandler}>Add chat</Button>
+				<Dialog open={visible} onClose={closeHandler}>
+					<DialogTitle>Please enter a name for a new chat</DialogTitle>
+					<TextField 
+						placeholder='Chat name'
+						value={chatName}
+						onChange={chatNameHandler}
+					/>
+				<Button onClick={saveHandler}>Save</Button>
+				</Dialog>
 			
 		</div>
 }
