@@ -1,16 +1,38 @@
-import { useState, useEffect, useCallback } from 'react';
-import { API_URL_PUBLIC } from '../constants/gists';
+import { useEffect, useCallback } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectGists, selectGistsLoading, selectGistsError } from '../store/gists/selectors';
+import { fetchGists } from '../store/gists/actions';
 
 const Gists = () => {
-	const [gists, setGists] = useState([]);
+	const dispatch = useDispatch();
+	const gists = useSelector(selectGists);
+	const loading = useSelector(selectGistsLoading);
+	const error = useSelector(selectGistsError);
+
+	const requestGists = () => {
+
+	dispatch(fetchGists());
+	}	
 
 	useEffect(() => {
-		fetch(API_URL_PUBLIC)
-		.then((response) => response.json())
-		.then((result) => setGists(result));
+	requestGists();
 	}, [])
 
-	const renderGists = useCallback((gist) => <li key={gist.id}>{gist.description || "No description"}</li>, [])
+	const renderGists = useCallback((gist) => <li key={gist.id}>{gist.description || "No description"}</li>, []);
+
+	if (loading) {
+		return <CircularProgress />
+	}
+
+	if (error) {
+		return (
+		<>
+			<h3>Error</h3>
+			<button onClick={requestGists}>Повторить</button>
+		</>
+		)
+	}
 
 	return <ul>
 		{gists.map(renderGists)}
